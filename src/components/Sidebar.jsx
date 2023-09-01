@@ -9,7 +9,12 @@ import { useStateContext } from "../contexts/ContextProvider";
 import { classNames } from "@syncfusion/ej2/buttons";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu } = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize } = useStateContext();
+  const handleCloseSideBar = () => {
+    if (activeMenu && screenSize <= 900) {
+      setActiveMenu(false);
+    }
+  };
 
   const activeLink =
     "flex item-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2";
@@ -35,7 +40,7 @@ const Sidebar = () => {
             <TooltipComponent content="Menu" position="BottomCenter">
               <button
                 type="button"
-                onClick={() => {
+                onClick={(handleCloseSideBar) => {
                   setActiveMenu((prevActiveMenu) => !prevActiveMenu);
                 }}
                 className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block"
@@ -52,7 +57,7 @@ const Sidebar = () => {
                   <NavLink
                     to={`/${link.name}`}
                     key={link.name}
-                    onClick={() => {}}
+                    // onClick={}
                     className={({ isActive }) =>
                       isActive ? activeLink : normalLink
                     }
